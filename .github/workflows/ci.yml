@@ -19,5 +19,9 @@ jobs:
           go-version-file: go.mod
       - run: make lint
       - run: go mod tidy -diff
-      - run: go test -count=1 ./...
+      - uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: 1.13.2
+          tofu_wrapper: false
+      - run: MANENT_TEST_TOFU="$(command -v tofu)" go test -count=1 ./...
       - run: make build
